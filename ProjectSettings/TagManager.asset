@@ -3,7 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Collection
+  - Plate
+  - Switch
+  - BlowDryer
+  - Cheese
+  - Plank
+  - Reservoir
+  - Fan
+  - BubbleCheese
   layers:
   - Default
   - TransparentFX
@@ -40,4 +49,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BackGround
+    uniqueID: 4038241153
+    locked: 0
+  - name: Frame
+    uniqueID: 70355907
+    locked: 0
+  - name: Props
+    uniqueID: 1099055193
+    locked: 0
+  - name: Switch
+    uniqueID: 2900208971
+    locked: 0
+  - name: Role
+    uniqueID: 528479511
     locked: 0

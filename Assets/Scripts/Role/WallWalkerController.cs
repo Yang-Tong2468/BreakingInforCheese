@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 重力控制&&箱子粘附控制器
+/// </summary>
 public class WallWalkerController : MonoBehaviour
 {
     // --- 所有变量声明都保持不变 ---
