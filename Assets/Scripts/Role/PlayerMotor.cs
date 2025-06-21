@@ -33,7 +33,7 @@ public class PlayerMotor2D : MonoBehaviour
     void Update()
     {
         // 从 Input 脚本获取输入值
-        horizontalMove = playerInput.HorizontalInput * moveSpeed;
+        //horizontalMove = playerInput.HorizontalInput * moveSpeed;
 
         // 在 Update 中处理跳跃输入，因为它是一次性事件
         //if (playerInput.JumpInput && isGrounded)
@@ -43,11 +43,11 @@ public class PlayerMotor2D : MonoBehaviour
         //}
 
         // 在 Update 中处理跳跃输入，因为它是一次性事件
-        if (playerInput.JumpInputDown && isGrounded)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            playerInput.UseJumpInput(); // 标记跳跃已被使用
-        }
+        //if (playerInput.JumpInputDown && isGrounded)
+        //{
+        //    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        //    playerInput.UseJumpInput(); // 标记跳跃已被使用
+        //}
     }
 
     void FixedUpdate()
@@ -77,11 +77,11 @@ public class PlayerMotor2D : MonoBehaviour
         }
         // 2. 可变高度跳跃 (Low Jump)
         // 如果角色正在上升 (y轴速度为正) 且玩家没有按住跳跃键
-        else if (rb.velocity.y > 0 && !playerInput.JumpInputHeld)
-        {
-            // 我们同样施加一个额外的向下的力，来提前终止跳跃的上升过程。
-            rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
-        }
+        //else if (rb.velocity.y > 0 && !playerInput.JumpInputHeld)
+        //{
+        //    // 我们同样施加一个额外的向下的力，来提前终止跳跃的上升过程。
+        //    rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
+        //}
     }
 
     private void HandleMovement()
