@@ -224,8 +224,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 123}
-  m_SizeDelta: {x: 219.9544, y: 83.2576}
+  m_AnchoredPosition: {x: 0.000015259, y: 90.064}
+  m_SizeDelta: {x: 375.7805, y: 260.4072}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &386570275
 MonoBehaviour:
@@ -249,8 +249,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u5976\u916A\u5927\u76D7"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9ebac4b0a58d4ed469d0e566fed644e4, type: 2}
+  m_sharedMaterial: {fileID: 991672081791351706, guid: 9ebac4b0a58d4ed469d0e566fed644e4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -697,8 +697,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u5F00\u59CB\u6E38\u620F"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9ebac4b0a58d4ed469d0e566fed644e4, type: 2}
+  m_sharedMaterial: {fileID: 991672081791351706, guid: 9ebac4b0a58d4ed469d0e566fed644e4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -809,7 +809,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -176}
+  m_AnchoredPosition: {x: 0, y: -189}
   m_SizeDelta: {x: 458.2094, y: 123.1212}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1659541676
@@ -918,7 +918,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 534c8495276fc60489d16d165e59faa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: Story
+  sceneName: StoryBetweenMenu&Teach
   scaleFactor: 1.3
 --- !u!1 &1721757063
 GameObject:
