@@ -26,7 +26,7 @@ public class Plate : MonoBehaviour
 
         // 1. 设置标志位，防止在消失延迟期间再次触发碰撞逻辑
         hasCollected = true;
-
+        GameManager.Instance.CurrentLevelController.OnCheeseCollected(); // 通知 GameManager 收集了奶酪
         Debug.Log("盘子碰到了奶酪！");
 
         // 2. 获取盘子和奶酪的 Rigidbody2D 组件

@@ -11,8 +11,20 @@ public class Fan : MonoBehaviour
     [SerializeField] private Rigidbody2D cheeseToMove;      // 在编辑器中直接指定要移动的奶酪
     [SerializeField] private Transform targetDestination;   // 奶酪要被送到的目标位置
     [SerializeField] private float travelDuration = 2.0f;   // 整个移动过程需要的时间（秒）
+    [SerializeField] private GameObject wind; // 风扇的风效果
+    private Animator windAnimator; //风的动画
 
     private bool isMoving = false; // 标志位，防止重复激活
+
+    private void Awake()
+    {
+        // 确保风扇的风效果在开始时是关闭的
+        if (wind != null)
+        {
+            windAnimator = wind.GetComponent<Animator>();
+        }
+    }
+
 
     [ContextMenu("Start Moving Cheese")]
     // 这是一个公共方法，可以被其他脚本（比如一个按钮）调用来启动风扇
@@ -33,48 +45,42 @@ public class Fan : MonoBehaviour
         isMoving = true;
         Debug.Log($"开始移动奶酪: {cheeseToMove.name}");
 
+        // 激活风的 GameObject，播放默认动画
+        if (wind != null)
+        {
+            wind.SetActive(true);
+        }
+
         // --- 准备工作 ---
-        // 1. 获取奶酪的 Rigidbody2D 组件
         Rigidbody2D cheeseRb = cheeseToMove.GetComponent<Rigidbody2D>();
-
-        // 2. 将奶酪的物理属性设置为 Kinematic
         cheeseRb.bodyType = RigidbodyType2D.Kinematic;
-        cheeseRb.velocity = Vector2.zero; // 清空速度
+        cheeseRb.velocity = Vector2.zero;
 
-        // 3. 记录起始位置和计时器
         Vector2 startPosition = cheeseToMove.transform.position;
         float elapsedTime = 0f;
 
-        // --- 移动循环 ---
-        // 当计时器小于总时长时，持续执行
         while (elapsedTime < travelDuration)
         {
-            // 计算当前应该在的进度 (0到1之间)
             float progress = elapsedTime / travelDuration;
-
-            // 使用 Vector2.Lerp (线性插值) 来计算当前帧应该在的位置
             Vector2 newPosition = Vector2.Lerp(startPosition, targetDestination.position, progress);
-
-            // 直接移动奶酪的位置
             cheeseRb.MovePosition(newPosition);
-
-            // 更新计时器
             elapsedTime += Time.deltaTime;
-
-            // 等待下一帧
             yield return null;
         }
 
-        // --- 移动结束 ---
-        // 确保奶酪最终精确地停在目标位置
         cheeseRb.MovePosition(targetDestination.position);
+        cheeseRb.bodyType = RigidbodyType2D.Static;
 
-        // (可选) 将奶酪的物理属性恢复为 Dynamic，让它可以再次自由活动
-         cheeseRb.bodyType = RigidbodyType2D.Static;
+        // 移动结束后关闭风
+        //if (wind != null)
+        //{
+        //    wind.SetActive(false);
+        //}
 
         Debug.Log("奶酪已到达目标位置！");
         isMoving = false;
     }
+
 
     // (可选) 在编辑器中绘制辅助线
     private void OnDrawGizmosSelected()

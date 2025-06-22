@@ -8,9 +8,11 @@ public class WallWalkerController : MonoBehaviour
 {
     // --- 所有变量声明都保持不变 ---
     [Header("组件引用")]
+    public LevelController leveController;
     private Rigidbody2D rb;
     private PlayerInput playerInput;
     private List<GameObject> groundContacts = new List<GameObject>();
+    private Animator animator;//子物体上的动画
 
     [Header("状态")]
     [SerializeField]private bool isGrounded = false;
@@ -45,6 +47,7 @@ public class WallWalkerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
         rb.gravityScale = 0;
+        animator = GetComponentInChildren<Animator>();
     }
 
     // --- Update 函数是主要修改点 ---
@@ -156,6 +159,12 @@ public class WallWalkerController : MonoBehaviour
         else if (playerInput.MoveRightPressed)
         {
             moveInput = 1f;
+        }
+
+        // 更新动画状态 
+        if (animator != null)
+        {
+            animator.SetFloat("Speed", Mathf.Abs(moveInput));
         }
 
         // 2. 如果有移动输入，则计算并应用移动

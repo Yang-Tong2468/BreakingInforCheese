@@ -22,9 +22,17 @@ public class WaterDrop : MonoBehaviour
             // --- 游戏结束逻辑 ---
             Debug.Log("水滴碰到了玩家！游戏结束。");
 
+
             // 1. 获取玩家对象，并可能禁用它的控制器，防止其在游戏结束画面继续移动
             GameObject playerObject = collision.gameObject;
             WallWalkerController playerController = playerObject.GetComponent<WallWalkerController>();
+
+            GameManager.Instance.PauseGame(); // 暂停游戏
+
+            //通知manager失败了，弹出失败界面
+            GameManager.Instance.CurrentLevelController.TriggerDefeat();
+
+
             if (playerController != null)
             {
                 playerController.enabled = false; // 禁用玩家的控制脚本
