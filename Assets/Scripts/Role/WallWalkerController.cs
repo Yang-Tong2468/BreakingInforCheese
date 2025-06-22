@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ÖØÁ¦¿ØÖÆ&&Ïä×ÓÕ³¸½¿ØÖÆÆ÷
+/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½&&ï¿½ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 /// </summary>
 public class WallWalkerController : MonoBehaviour
 {
-    // --- ËùÓÐ±äÁ¿ÉùÃ÷¶¼±£³Ö²»±ä ---
-    [Header("×é¼þÒýÓÃ")]
+    // --- ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö²ï¿½ï¿½ï¿½ ---
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     private Rigidbody2D rb;
     private PlayerInput playerInput;
     private List<GameObject> groundContacts = new List<GameObject>();
@@ -18,28 +18,28 @@ public class WallWalkerController : MonoBehaviour
     [SerializeField]private Vector2 fallDirection = Vector2.down;
     [SerializeField]private bool facingRight = true;
 
-    [Header("ÒÆ¶¯²ÎÊý")]
-    [SerializeField] private float fallForce = 50f;
-    [SerializeField] private float maxFallSpeed = 15f;
-    [SerializeField] private float moveSpeedOnWall = 5f;
+    [Header("ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½")]
+    [SerializeField] private float fallForce;
+    [SerializeField] private float maxFallSpeed;
+    [SerializeField] private float moveSpeedOnWall;
 
-    [Header("Õ³¸½²ÎÊý")]
-    [SerializeField]private bool isAttached = false; // ÊÇ·ñÕ³¸½ÔÚÎïÌåÉÏ
+    [Header("Õ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
+    [SerializeField]private bool isAttached = false; // ï¿½Ç·ï¿½Õ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     [SerializeField]private Rigidbody2D attachedObjectRb;
     [SerializeField] private Vector2 disengagementSpeed = new Vector2(5,5);
     [SerializeField]private Vector2 lastFallDirection;
-    private Vector3 attachedObjectOffset;//ºÍÕ³Á¬ÎïÏà¶ÔÎ»ÒÆ
+    private Vector3 attachedObjectOffset;//ï¿½ï¿½Õ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
 
 
-    [Header("Í¼²ãÉèÖÃ")]
+    [Header("Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask stickyLayer;
 
-    [Header("Õ³¸½²ÎÊý")]
+    [Header("Õ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     private float attachmentCooldownTimer = 0f;
-    [SerializeField] private float attachmentCooldown = 0.2f; // ÀäÈ´Ê±¼ä£¬0.2ÃëÍ¨³£×ã¹»
+    [SerializeField] private float attachmentCooldown = 0.2f; // ï¿½ï¿½È´Ê±ï¿½ä£¬0.2ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ã¹»
 
-    // --- Awake º¯Êý±£³Ö²»±ä ---
+    // --- Awake ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö²ï¿½ï¿½ï¿½ ---
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -47,13 +47,13 @@ public class WallWalkerController : MonoBehaviour
         rb.gravityScale = 0;
     }
 
-    // --- Update º¯ÊýÊÇÖ÷ÒªÐÞ¸Äµã ---
+    // --- Update ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Þ¸Äµï¿½ ---
     void Update()
     {
-        // ºËÐÄÂß¼­£ºÖ»ÓÐÔÚ½Ó´¥µØÃæ»òÕ³¸½ÎïÌåÊ±£¬²ÅÔÊÐí¶ÁÈ¡WASDÀ´¸Ä±ä·½Ïò
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½Ú½Ó´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡WASDï¿½ï¿½ï¿½Ä±ä·½ï¿½ï¿½
         canSwitchDirection = isGrounded || (attachedObjectRb != null);
 
-        // ¸üÐÂÕ³¸½ÀäÈ´¼ÆÊ±Æ÷
+        // ï¿½ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ï¿½ï¿½È´ï¿½ï¿½Ê±ï¿½ï¿½
         if (attachmentCooldownTimer > 0)
         {
             attachmentCooldownTimer -= Time.deltaTime;
@@ -61,61 +61,61 @@ public class WallWalkerController : MonoBehaviour
 
         if (canSwitchDirection)
         {
-            // ¶ÁÈ¡WASDÊäÈë£¬²¢È·±£Ò»´ÎÖ»ÓÐÒ»¸ö·½Ïò
+            // ï¿½ï¿½È¡WASDï¿½ï¿½ï¿½ë£¬ï¿½ï¿½È·ï¿½ï¿½Ò»ï¿½ï¿½Ö»ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             Vector2 newFallDirection = GetDirectionFromInput();
 
-            // Èç¹ûÓÐÐÂµÄÓÐÐ§·½ÏòÊäÈë£¬Ôò¸üÐÂ fallDirection
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½ï¿½ fallDirection
             if (newFallDirection != Vector2.zero && newFallDirection != fallDirection)
             {
-                lastFallDirection = fallDirection; // ¼ÇÂ¼¾É·½Ïò
+                lastFallDirection = fallDirection; // ï¿½ï¿½Â¼ï¿½É·ï¿½ï¿½ï¿½
                 fallDirection = newFallDirection;
                 rb.velocity = Vector2.zero;
             }
         }
     }
 
-    // --- FixedUpdate º¯ÊýÒ²ÓÐÖØÒªÐÞ¸Ä ---
+    // --- FixedUpdate ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½Òªï¿½Þ¸ï¿½ ---
     void FixedUpdate()
     {
-        // --- 1. ´¦Àí·ÖÀë ---
-        // ÕâÊÇ×î¸ßÓÅÏÈ¼¶µÄ²Ù×÷¡£Èç¹ûÐèÒª·ÖÀë£¬¾Í·ÖÀë²¢½áÊø±¾´Î¸üÐÂ¡£
+        // --- 1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ---
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¼ï¿½ï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ë£¬ï¿½Í·ï¿½ï¿½ë²¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¸ï¿½ï¿½Â¡ï¿½
         if (attachedObjectRb != null && fallDirection != lastFallDirection)
         {
             DetachObject();
-            return; // ¹Ø¼ü£¡Á¢¼´ÍË³ö FixedUpdate£¬·ÀÖ¹ÔÚÍ¬Ò»Ö¡Ê©¼Ó×¹ÂäÁ¦¡£
+            return; // ï¿½Ø¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ FixedUpdateï¿½ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½Í¬Ò»Ö¡Ê©ï¿½ï¿½×¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         }
 
-        // --- 2. ´¦ÀíÐý×ª ---
-        // Ðý×ª×ÜÊÇÐèÒªÖ´ÐÐµÄ
+        // --- 2. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ª ---
+        // ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÖ´ï¿½Ðµï¿½
         HandleRotation();
 
-        // --- 3. ¸ù¾Ý×´Ì¬Ö´ÐÐ²»Í¬ÐÐÎª ---
+        // --- 3. ï¿½ï¿½ï¿½ï¿½×´Ì¬Ö´ï¿½Ð²ï¿½Í¬ï¿½ï¿½Îª ---
         if (isGrounded)
         {
-            // ÔÚµØÃæÉÏÊ±£¬¿ÉÒÔÔÚÇ½ÉÏÒÆ¶¯
+            // ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç½ï¿½ï¿½ï¿½Æ¶ï¿½
             HandleWallMovement();
         }
         else if (isAttached)
         {
-            // Õ³¸½Ê±£¬ÈÃÕ³¸½Îï¸úËæÍæ¼Ò£¨Í¬²½ËÙ¶È£©
-            // ²¢ÇÒ£¬Íæ¼Ò±¾ÉíÒ²Ó¦¸ÃÊÜµ½×¹ÂäÁ¦µÄÓ°Ïì
-            HandleFallingOrAttached(); // Íæ¼ÒÐèÒªÁ¦
-            if (attachedObjectRb != null) attachedObjectRb.velocity = rb.velocity; // Õ³¸½Îï¸úËæ
+            // Õ³ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò£ï¿½Í¬ï¿½ï¿½ï¿½Ù¶È£ï¿½
+            // ï¿½ï¿½ï¿½Ò£ï¿½ï¿½ï¿½Ò±ï¿½ï¿½ï¿½Ò²Ó¦ï¿½ï¿½ï¿½Üµï¿½×¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½ï¿½
+            HandleFallingOrAttached(); // ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½
+            if (attachedObjectRb != null) attachedObjectRb.velocity = rb.velocity; // Õ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         }
         else
         {
-            // ÔÚ¿ÕÖÐÊ±£¬×ÔÓÉ×¹Âä
+            // ï¿½Ú¿ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¹ï¿½ï¿½
             HandleFallingOrAttached();
         }
     }
 
-    // ÐÂµÄº¯Êý£¬ºÏ²¢ÁË×¹ÂäºÍÕ³¸½ÒÆ¶¯µÄÂß¼­
+    // ï¿½ÂµÄºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï²ï¿½ï¿½ï¿½×¹ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ß¼ï¿½
     private void HandleFallingOrAttached()
     {
-        // Èç¹ûÃ»ÓÐÕ³¸½ÎïÌå£¬¾ÍÊÇ×ÔÓÉ×¹Âä
+        // ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Õ³ï¿½ï¿½ï¿½ï¿½ï¿½å£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¹ï¿½ï¿½
         if (attachedObjectRb == null)
         {
-            // Ê©¼Ó×¹ÂäµÄÁ¦£¬µ«ÒªÏÞÖÆ×î´óËÙ¶È
+            // Ê©ï¿½ï¿½×¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½
             if (rb.velocity.magnitude < maxFallSpeed)
             {
                 rb.AddForce(fallDirection * fallForce);
@@ -123,31 +123,31 @@ public class WallWalkerController : MonoBehaviour
         }
     }
 
-    // A. ´¦ÀíÐý×ª (Ë²Ê±Ðý×ª°æ)
+    // A. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ª (Ë²Ê±ï¿½ï¿½×ªï¿½ï¿½)
 
     private void HandleRotation()
     {
-        // ÎÒÃÇµÄÄ¿±êÊÇÈÃ½ÇÉ«µÄ¡°Í·¶¥¡±(transform.up)Ö¸ÏòÓë×¹Âä·½ÏòÏà·´µÄ·½Ïò¡£
+        // ï¿½ï¿½ï¿½Çµï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½Ã½ï¿½É«ï¿½Ä¡ï¿½Í·ï¿½ï¿½ï¿½ï¿½(transform.up)Ö¸ï¿½ï¿½ï¿½ï¿½×¹ï¿½ä·½ï¿½ï¿½ï¿½à·´ï¿½Ä·ï¿½ï¿½ï¿½
         Vector2 targetUpDirection = -fallDirection;
 
-        // Ê¹ÓÃ Mathf.Atan2 Ö±½Ó¼ÆËãÄ¿±ê½Ç¶È
+        // Ê¹ï¿½ï¿½ Mathf.Atan2 Ö±ï¿½Ó¼ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Ç¶ï¿½
         float targetAngle = Mathf.Atan2(targetUpDirection.y, targetUpDirection.x) * Mathf.Rad2Deg;
 
-        // ´´½¨Ä¿±êÐý×ª (ÒÀÈ»ÐèÒª-90¶ÈÐ£Õý)
+        // ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½×ª (ï¿½ï¿½È»ï¿½ï¿½Òª-90ï¿½ï¿½Ð£ï¿½ï¿½)
         Quaternion targetRotation = Quaternion.Euler(0, 0, targetAngle - 90f);
 
-        // Ö±½ÓÉèÖÃ¸ÕÌåµÄÐý×ª£¬¶ø²»ÊÇÆ½»¬¹ý¶É¡£Õâ»áÔÚÒ»Ö¡ÄÚÍê³ÉÐý×ª¡£
+        // Ö±ï¿½ï¿½ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½É¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ö¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½
         rb.MoveRotation(targetRotation);
     }
 
-    /// B. ´¦ÀíÔÚÇ½ÉÏÒÆ¶¯ (¸ù¾Ý¼«¼òÊäÈë¿ØÖÆÆ÷¸üÐÂºó)
+    /// B. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç½ï¿½ï¿½ï¿½Æ¶ï¿½ (ï¿½ï¿½ï¿½Ý¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âºï¿½)
     private void HandleWallMovement()
     {
-        // µÖÏûÈÎºÎ²ÐÓàµÄ×¹ÂäÁ¦£¬ÈÃ½ÇÉ«½ôÌùÇ½Ãæ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ÎºÎ²ï¿½ï¿½ï¿½ï¿½×¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã½ï¿½É«ï¿½ï¿½ï¿½ï¿½Ç½ï¿½ï¿½
         rb.velocity = Vector2.zero;
 
-        // --- ´Ó²¼¶ûÊäÈëÖµÉú³ÉÒÆ¶¯ÊäÈë ---
-        // 1. ½«²¼¶ûÊäÈë×ª»»ÎªÒ»¸ö´ú±í·½ÏòµÄ¸¡µãÊý (-1, 0, »ò 1)
+        // --- ï¿½Ó²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ ---
+        // 1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ÎªÒ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ (-1, 0, ï¿½ï¿½ 1)
         float moveInput = 0f;
         if (playerInput.MoveLeftPressed)
         {
@@ -158,21 +158,21 @@ public class WallWalkerController : MonoBehaviour
             moveInput = 1f;
         }
 
-        // 2. Èç¹ûÓÐÒÆ¶¯ÊäÈë£¬Ôò¼ÆËã²¢Ó¦ÓÃÒÆ¶¯
+        // 2. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½ã²¢Ó¦ï¿½ï¿½ï¿½Æ¶ï¿½
         if (moveInput != 0f)
         {
-            // ¼ÆËãÏà¶ÔÓÚ½ÇÉ«×Ô¼ºµÄÒÆ¶¯·½Ïò (transform.right Ö¸Ïò½ÇÉ«µÄÓÒ±ß)
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½É«ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ (transform.right Ö¸ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½Ò±ï¿½)
             Vector2 moveDirection = transform.right * moveInput;
 
-            // ¼ÆËãÄ¿±êÎ»ÖÃ
+            // ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Î»ï¿½ï¿½
             Vector2 targetPosition = rb.position + moveDirection * moveSpeedOnWall * Time.fixedDeltaTime;
 
-            // Ê¹ÓÃ MovePosition Æ½»¬ÇÒÎÈ¶¨µØÒÆ¶¯½ÇÉ«
+            // Ê¹ï¿½ï¿½ MovePosition Æ½ï¿½ï¿½ï¿½ï¿½ï¿½È¶ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½É«
             rb.MovePosition(targetPosition);
         }
 
-        // 3. ´¦Àí½ÇÉ«ÃæÏò·­×ª (Âß¼­ÓëÒÆ¶¯ÊäÈë½âñî)
-        // ÕâÑù×öµÄºÃ´¦ÊÇ£¬¼´Ê¹½ÇÉ«ÒòÎªÄ³Ð©Ô­ÒòÃ»ÓÐÒÆ¶¯£¬µ«Ö»ÒªÍæ¼Ò°´ÏÂÁË·½Ïò¼ü£¬½ÇÉ«¾Í»á×ªÏò
+        // 3. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½×ª (ï¿½ß¼ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÄºÃ´ï¿½ï¿½Ç£ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½É«ï¿½ï¿½ÎªÄ³Ð©Ô­ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½Ö»Òªï¿½ï¿½Ò°ï¿½ï¿½ï¿½ï¿½Ë·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½Í»ï¿½×ªï¿½ï¿½
         if (moveInput < 0 && facingRight)
         {
             Flip();
@@ -185,64 +185,64 @@ public class WallWalkerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // --- ÐÂÔö£º¼ì²éÀäÈ´Ê±¼ä ---
+        // --- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È´Ê±ï¿½ï¿½ ---
         if (attachmentCooldownTimer > 0)
         {
-            return; // Èç¹ûÔÚÀäÈ´Ê±¼äÄÚ£¬Ö±½ÓºöÂÔËùÓÐÕ³¸½³¢ÊÔ
+            return; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È´Ê±ï¿½ï¿½ï¿½Ú£ï¿½Ö±ï¿½Óºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         }
 
-        Debug.Log("×²ÉÏÁË");
+        Debug.Log("×²ï¿½ï¿½ï¿½ï¿½");
         if (isGrounded || attachedObjectRb != null || (stickyLayer.value & (1 << collision.gameObject.layer)) == 0)
         {
             return;
         }
-        Debug.Log("Õ³¸½³É¹¦£¡");
+        Debug.Log("Õ³ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½");
 
         attachedObjectRb = collision.gameObject.GetComponent<Rigidbody2D>();
-        if (attachedObjectRb == null) return; // Èç¹û¶Ô·½Ã»ÓÐ¸ÕÌå£¬ÔòÎÞ·¨Õ³¸½
+        if (attachedObjectRb == null) return; // ï¿½ï¿½ï¿½ï¿½Ô·ï¿½Ã»ï¿½Ð¸ï¿½ï¿½å£¬ï¿½ï¿½ï¿½Þ·ï¿½Õ³ï¿½ï¿½
 
         isAttached = true;
-        lastFallDirection = fallDirection; // Õ³¸½Ê±£¬Ëø¶¨µ±Ç°·½ÏòÎª¡°¾É·½Ïò¡±
+        lastFallDirection = fallDirection; // Õ³ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½É·ï¿½ï¿½ï¿½
 
-        // --- »Ö¸´¹Ø¼üµÄÕ³¸½Âß¼­ ---
-        // 1. ÉèÖÃ¶Ô·½ÎªÔË¶¯Ñ§Ä£Ê½£¬ÕâÑùËü¾ÍÍêÈ«ÓÉÎÒÃÇµÄ´úÂë¿ØÖÆ
+        // --- ï¿½Ö¸ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ï¿½ß¼ï¿½ ---
+        // 1. ï¿½ï¿½ï¿½Ã¶Ô·ï¿½Îªï¿½Ë¶ï¿½Ñ§Ä£Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ÇµÄ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         //attachedObjectRb.isKinematic = true;
 
-        // 2. ½ûÓÃÁ½Õß¼äµÄÅö×²£¬±ÜÃâ¶¶¶¯ºÍÎïÀíÅÅ³â
+        // 2. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½×²ï¿½ï¿½ï¿½ï¿½ï¿½â¶¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å³ï¿½
         //Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.collider, true);
 
-        // 3. Í£Ö¹Íæ¼ÒºÍÕ³¸½ÎïµÄµ±Ç°ËÙ¶È£¬×¼±¸Ò»ÆðÒÆ¶¯
+        // 3. Í£Ö¹ï¿½ï¿½Òºï¿½Õ³ï¿½ï¿½ï¿½ï¿½Äµï¿½Ç°ï¿½Ù¶È£ï¿½×¼ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Æ¶ï¿½
         //rb.velocity = Vector2.zero;
         //attachedObjectRb.velocity = Vector2.zero;
     }
 
 
-    // F. ·ÖÀëÎïÌå
+    // F. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private void DetachObject()
     {
         if (attachedObjectRb == null) return;
 
-        Debug.Log("·ÖÀëÎïÌå");
-        // --- ÐÂÔö£ºÆô¶¯ÀäÈ´¼ÆÊ±Æ÷ ---
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+        // --- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È´ï¿½ï¿½Ê±ï¿½ï¿½ ---
         attachmentCooldownTimer = attachmentCooldown;
 
         isAttached = false;
 
-        // 1. ¼ÇÂ¼ÏÂ·ÖÀëÇ°µÄËÙ¶È
+        // 1. ï¿½ï¿½Â¼ï¿½Â·ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Ù¶ï¿½
         Vector2 lastPlayerVelocity = rb.velocity;
         Vector2 direction = lastPlayerVelocity.normalized;
         if (direction == Vector2.zero)
         {
-            // Èç¹û·ÖÀëÊ±ËÙ¶ÈÎª0, ¸øÒ»¸öÄ¬ÈÏ·½Ïò£¨±ÈÈçÓë¾ÉÖØÁ¦·½ÏòÏà·´£©
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ù¶ï¿½Îª0, ï¿½ï¿½Ò»ï¿½ï¿½Ä¬ï¿½Ï·ï¿½ï¿½ò£¨±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½à·´ï¿½ï¿½
             direction = lastFallDirection;
         }
-        attachedObjectRb.velocity = direction * disengagementSpeed.x; // Ê¹ÓÃ disengagementSpeed µÄx·ÖÁ¿×÷ÎªËÙ¶È´óÐ¡
+        attachedObjectRb.velocity = direction * disengagementSpeed.x; // Ê¹ï¿½ï¿½ disengagementSpeed ï¿½ï¿½xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½Ù¶È´ï¿½Ð¡
 
 
-        // 2. ½«Íæ¼ÒËÙ¶ÈÇåÁã£¬ÈÃÍæ¼Ò¿ÉÒÔ´Ó¾²Ö¹¿ªÊ¼³¯ÐÂ·½Ïò¼ÓËÙ
+        // 2. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½ï¿½ï¿½ï¿½ã£¬ï¿½ï¿½ï¿½ï¿½Ò¿ï¿½ï¿½Ô´Ó¾ï¿½Ö¹ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         rb.velocity = Vector2.zero;
 
-        // »Ö¸´Åö×²
+        // ï¿½Ö¸ï¿½ï¿½ï¿½×²
         //Collider2D playerCollider = GetComponent<Collider2D>();
         //Collider2D attachedCollider = attachedObjectRb.GetComponent<Collider2D>();
         //if (playerCollider != null && attachedCollider != null)
@@ -250,27 +250,27 @@ public class WallWalkerController : MonoBehaviour
         //    Physics2D.IgnoreCollision(playerCollider, attachedCollider, false);
         //}
 
-        // 3. ÈÃ±»·ÖÀëµÄÎïÌå¼Ì³ÐÍæ¼Ò·ÖÀëÇ°µÄËÙ¶È
+        // 3. ï¿½Ã±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì³ï¿½ï¿½ï¿½Ò·ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Ù¶ï¿½
         //attachedObjectRb.velocity = lastPlayerVelocity;
 
-        // Ìí¼Ó¼õËÙÆ÷
+        // ï¿½ï¿½ï¿½Ó¼ï¿½ï¿½ï¿½ï¿½ï¿½
         if (attachedObjectRb.gameObject.GetComponent<Decelerator>() == null)
         {
             attachedObjectRb.gameObject.AddComponent<Decelerator>();
         }
 
-        // Çå³ýÒýÓÃ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         attachedObjectRb = null;
     }
 
-    // E. Ê¹ÓÃ´¥·¢Æ÷À´¼ì²âµØÃæ½Ó´¥
-    // ÕâÊÇ GroundCheck ×ÓÎïÌåÉÏµÄ CircleCollider2D (Trigger) µ÷ÓÃµÄ
+    // E. Ê¹ï¿½Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó´ï¿½
+    // ï¿½ï¿½ï¿½ï¿½ GroundCheck ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ CircleCollider2D (Trigger) ï¿½ï¿½ï¿½Ãµï¿½
     void OnTriggerEnter2D(Collider2D other)
     {
         if ((groundLayer.value & (1 << other.gameObject.layer)) != 0 && !groundContacts.Contains(other.gameObject))
         {
             groundContacts.Add(other.gameObject);
-            isGrounded = true; // Á¢¼´¸üÐÂ×´Ì¬
+            isGrounded = true; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬
         }
     }
 
@@ -279,7 +279,7 @@ public class WallWalkerController : MonoBehaviour
         if (groundContacts.Contains(other.gameObject))
         {
             groundContacts.Remove(other.gameObject);
-            // Ö»ÓÐµ±²»ÔÙ½Ó´¥ÈÎºÎµØÃæÊ±£¬²Å¸üÐÂ×´Ì¬
+            // Ö»ï¿½Ðµï¿½ï¿½ï¿½ï¿½Ù½Ó´ï¿½ï¿½ÎºÎµï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ï¿½×´Ì¬
             if (groundContacts.Count == 0)
             {
                 isGrounded = false;
@@ -295,13 +295,13 @@ public class WallWalkerController : MonoBehaviour
         transform.localScale = theScale;
     }
 
-    // ¸¨Öúº¯Êý£¬½«ÊäÈë×ª»»Îª·½Ïò
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
     private Vector2 GetDirectionFromInput()
     {
         if (playerInput.LeftPressed) return Vector2.left;
         if (playerInput.RightPressed) return Vector2.right;
         if (playerInput.UpPressed) return Vector2.up;
         if (playerInput.DownPressed) return Vector2.down;
-        return Vector2.zero; // Ã»ÓÐÊäÈë
+        return Vector2.zero; // Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     }
 }

@@ -2,34 +2,40 @@ using UnityEngine;
 using UnityEngine.SceneManagement; 
 
 /// <summary>
-/// ©ьжфк╝╣н╣дппн╙║ё╣╠кЭеЖ╣╫╢Ьсп "Player" ╠Йг╘╣днОлЕй╠ё╛
-/// ╩А╢╔╥╒сно╥╫АйЬ╣дбъ╪╜
+/// О©╫О©╫О©╫О©╫к╝О©╫н╣О©╫О©╫О©╫н╙О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ "Player" О©╫О©╫г╘О©╫О©╫О©╫О©╫О©╫О©╫й╠О©╫О©╫
+/// О©╫А╢╔О©╫О©╫О©╫О©╫о╥О©╫О©╫О©╫О©╫О©╫О©╫О©╫ъ╪О©╫
 /// </summary>
 public class WaterDrop : MonoBehaviour
 {
-    [Header("п╖╧ШиХжц")]
-    [SerializeField] private GameObject splashEffectPrefab; // еЖ╣╫мФ╪рй╠╡╔╥е╣д║╟к╝╩╗║╠льп╖
+    [Header("п╖О©╫О©╫О©╫О©╫О©╫О©╫")]
+    [SerializeField] private GameObject splashEffectPrefab; // О©╫О©╫О©╫О©╫О©╫О©╫О©╫й╠О©╫О©╫О©╫е╣д║О©╫к╝О©╫О©╫О©╫О©╫О©╫О©╫п╖
 
-    // OnCollisionEnter2D ╩Атза╫╦Ж╢Ьсп Collider2D ╣д╦улЕеЖв╡й╠╠╩╣Всц
+    // OnCollisionEnter2D О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ Collider2D О©╫д╦О©╫О©╫О©╫О©╫О©╫в╡й╠О©╫О©╫О©╫О©╫О©╫О©╫
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // 1. оЗ╩ык╝╣нвтиМ
+        // if(collision.gameObject.CompareTag("Plate"))
+        // {
+        //     collision.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        //     return;
+        // }
+        
+        // 1. О©╫О©╫О©╫О©╫к╝О©╫О©╫О©╫О©╫О©╫О©╫
         Destroy(gameObject);
 
-        // ╪Л╡Ив╡╣╫╣днОлЕйг╥ЯйгмФ╪р
+        // О©╫О©╫О©╫в╡О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫г╥О©╫О©╫О©╫О©╫О©╫О©╫
         if (collision.gameObject.CompareTag("Player"))
         {
-            // --- сно╥╫АйЬбъ╪╜ ---
-            Debug.Log("к╝╣неЖ╣╫акмФ╪рё║сно╥╫АйЬ║ё");
+            // --- О©╫О©╫о╥О©╫О©╫О©╫О©╫О©╫ъ╪О©╫ ---
+            Debug.Log("к╝О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫рёО©╫О©╫О©╫о╥О©╫О©╫О©╫О©╫О©╫О©╫");
 
-            // 1. ╩Ях║мФ╪р╤тоСё╛╡╒©идэ╫ШсцкЭ╣д©ьжффВё╛╥юж╧фДтзсно╥╫АйЬ╩╜цФ╪лпЬрф╤╞
+            // 1. О©╫О©╫х║О©╫О©╫р╤О©╫О©╫Сё╛╡О©╫О©╫О©╫О©╫э╫О©╫О©╫О©╫О©╫О©╫О©╫д©О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ж╧О©╫О©╫О©╫О©╫О©╫О©╫о╥О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ф╤О©╫
             GameObject playerObject = collision.gameObject;
             WallWalkerController playerController = playerObject.GetComponent<WallWalkerController>();
             if (playerController != null)
             {
-                playerController.enabled = false; // ╫ШсцмФ╪р╣д©ьжф╫е╠╬
+                playerController.enabled = false; // О©╫О©╫О©╫О©╫О©╫О©╫р╣д©О©╫О©╫ф╫е╠О©╫
             }
-            // р╡©иртж╠╫с╤Ё╫АмФ╪р╣д╦улЕ
+            // р╡О©╫О©╫О©╫О©╫ж╠О©╫с╤О©╫О©╫О©╫О©╫О©╫р╣д╦О©╫О©╫О©╫
             Rigidbody2D playerRb = playerObject.GetComponent<Rigidbody2D>();
             if (playerRb != null)
             {
@@ -37,24 +43,24 @@ public class WaterDrop : MonoBehaviour
                 playerRb.bodyType = RigidbodyType2D.Static;
             }
 
-            // 2. тзеЖв╡╣Ц╡╔╥ек╝╩╗льп╖
+            // 2. О©╫О©╫О©╫О©╫в╡О©╫Ц╡╔О©╫О©╫к╝О©╫О©╫О©╫О©╫п╖
             if (splashEffectPrefab != null)
             {
                 Instantiate(splashEffectPrefab, collision.contacts[0].point, Quaternion.identity);
             }
 
-            // 4. ╣Всцр╩╦Жх╚╬ж╣дсно╥╫АйЬ╧эюМфВё╛╩Руъж╠╫сясЁы╨СжьфТ╧ь©╗
-            // н╙акящй╬ё╛нрцгж╠╫сясЁы1.5цК╨Сжьпб╪сть╣╠г╟Ё║╬╟
+            // 4. О©╫О©╫О©╫О©╫р╩О©╫О©╫х╚О©╫ж╣О©╫О©╫О©╫о╥О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ж╠О©╫О©╫О©╫сЁы╨О©╫О©╫О©╫О©╫О©╫О©╫ь©О©╫
+            // н╙О©╫О©╫О©╫О©╫й╬О©╫О©╫О©╫О©╫О©╫О©╫ж╠О©╫О©╫О©╫сЁО©╫1.5О©╫О©╫О©╫О©╫О©╫О©╫б╪О©╫О©╫ь╣О©╫г╟О©╫О©╫О©╫О©╫
             //Invoke("RestartLevel", 1.5f);
         }
     }
 
-    // р╩╦Ж╪Р╣╔╣д╥╫╥╗ё╛сцсзжьпб╪сть╣╠г╟╩Н╤╞╣дЁ║╬╟
+    // р╩О©╫О©╫О©╫Р╣╔╣д╥О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫б╪О©╫О©╫ь╣О©╫г╟О©╫Н╤╞О©╫дЁО©╫О©╫О©╫
     private void RestartLevel()
     {
-        // ╩Ях║╣╠г╟╩Н╤╞Ё║╬╟╣дкВрЩ
+        // О©╫О©╫х║О©╫О©╫г╟О©╫Н╤╞О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        // жьпб╪сть╦цЁ║╬╟
+        // О©╫О©╫О©╫б╪О©╫О©╫ь╦цЁО©╫О©╫О©╫
         SceneManager.LoadScene(currentSceneIndex);
     }
 }
