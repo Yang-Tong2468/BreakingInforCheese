@@ -47,18 +47,14 @@ public class TutorialSceneManager : MonoBehaviour
     // 恢复玩家操作至初始设置
     public void RestorePlayerState()
     {
-        if (player != null)
-        {
-            player.transform.position = playerInitialPosition;
-            player.transform.rotation = playerInitialRotation;
-        }
-        // 如有其他对象，也可在此处恢复
-        Debug.Log("玩家操作已恢复至初始设置");
+        // 重新加载当前场景，所有状态恢复到初始
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     // 跳过当前教学场景
     public void SkipTutorial()
     {
+        Debug.Log("跳过当前教学场景");
         if (currentSceneIndex < sceneNames.Count - 1)
         {
             SceneManager.LoadScene(sceneNames[currentSceneIndex + 1]);
